@@ -1,0 +1,96 @@
+<div *ngIf="product" class="mt-3">
+    <div class="display-6">
+        Formulário de Cadastro:
+    </div>
+    <div  class="row">
+        <div class="col-md-10 offset-md-1">
+            
+            <form [formGroup]="formGroupProduct" #ngFormProduct="ngForm">
+
+                <div *ngIf="product.id" class="row mb-3 mt-3">
+                    <label for="inputId" class="col-sm-2 col-form-label">Id:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="id" id="inputId" formControlName="id"> 
+                    </div>
+                </div>
+                
+                <div class="row mb-3 mt-3">
+                    <label for="inputName" class="col-sm-2 col-form-label">Nome:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" id="inputName" formControlName="name" > 
+                        <div *ngIf="ngFormProduct.submitted">
+                            <small *ngIf="pfgName?.errors?.['required']" class="form-text text-danger">*Nome é requirido!</small>
+                            <small *ngIf="pfgName?.errors?.['minlength']" class="form-text text-danger">*Tamanho mínimo de 3 caracteres!</small>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <label for="inputDescription" class="col-sm-2 col-form-label">Descrição:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="description" id="inputDescription" formControlName="description">
+                        <div *ngIf="ngFormProduct.submitted">
+                            <small *ngIf="pfgDescription?.errors?.['required']" class="form-text text-danger">*Descrição é requirida!</small>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <label for="inputPrice" class="col-sm-2 col-form-label">Preço:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="price" id="inputPrice" formControlName="price">
+                        <div *ngIf="ngFormProduct.submitted">
+                            <small *ngIf="pfgPrice?.errors?.['required']" class="form-text text-danger">*Preço é requirido!</small>
+                        </div>
+                    </div>
+                    <label for="selectCategory" class="col-sm-2 col-form-label">Categoria:</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" 
+                                aria-label="Selecione uma categoria"
+                                name="category"
+                                id="selectCategory" 
+                                formControlName="category"
+                                [compareWith]="selectedCategory"
+                        >
+                            <option *ngFor="let cat of categories"  [ngValue]="cat">
+                                {{cat.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="ngFormProduct.submitted">
+                            <small *ngIf="pfgCategory?.errors?.['required']" class="form-text text-danger">*Categoria é requirida!</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <label  class="col-sm-2 col-form-label">Opções:</label>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="promotion" id="checkBoxPromotion" formControlName="promotion">
+                            <label class="form-check-label" for="checkBoxPromotion">
+                                Promoção
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="newProduct" id="checkBoxNewProduct" formControlName="newProduct">
+                            <label class="form-check-label" for="checkBoxNewProduct">
+                                Lançamento
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3 mt-3">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary me-1" (click)="save()">Salvar</button>
+                        <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
